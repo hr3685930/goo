@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package auth;
+option go_package = "./proto";
+
+import "google/api/annotations.proto";
+
+service User {
+   rpc AuthToken(AuthRequest) returns (AuthResponse) {
+       option (google.api.http) = {
+           post: "/auth/token"
+           body: "*"
+       };
+   }
+
+   rpc GetCurrentUserInfo(Empty) returns (CurrentUserResponse) {
+       option (google.api.http) = {
+           get: "/api/me/profile"
+       };
+   }
+
+   rpc UpdateCurrentUserInfo(CurrentUserRequest) returns (CurrentUserResponse) {
+       option (google.api.http) = {
+           put: "/api/me/profile"
+           body: "*"
+       };
+   }
+}
+
+message AuthRequest {
+    string grant_type = 1; // 支持password client_credentials refresh_token
+    string client_id = 2;
+    string client_secret = 3;
+    string username = 4;
+    string password = 5;
+    string refresh_token = 6;
+}
+
+message AuthResponse {
+    string refresh_token = 1;
+    string token_type = 2;
+    string access_token = 3;
+    int32 expires_in = 4;
+}
+
+
+message Empty {
+
+}
+
+message CurrentUserRequest {
+    string username = 1;
+    string password = 2;
+    string email = 3;
+}
+
+
+message CurrentUserResponse {
+    string username = 1;
+    string password = 2;
+    string email = 3;
+}

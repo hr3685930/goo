@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+
+    mysql:
+        image: registry.cn-qingdao.aliyuncs.com/herui-public/mysql
+        container_name: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=admin123
+            - MYSQL_INITDB_SKIP_TZINFO=true
+            - MYSQL_HOSTNAME=mysql
+            - MYSQL_PORT=3306
+            - MYSQL_DATABASE=goo
+            - MYSQL_USER=admin
+            - MYSQL_PASSWORD=123456
+        ports:
+            - 3306:3306
+        volumes:
+            - /tmp/data/goo/mysql:/var/lib/mysql
+
+    redis:
+        image: registry.cn-qingdao.aliyuncs.com/herui-public/redis
+        container_name: redis
+        ports:
+            - 6379:6379
+        volumes:
+            - /tmp/data/goo/redis:/data
