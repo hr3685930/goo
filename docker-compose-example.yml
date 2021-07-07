@@ -25,3 +25,16 @@ services:
             - 6379:6379
         volumes:
             - /tmp/data/goo/redis:/data
+    rabbitmq:
+        image: registry.cn-qingdao.aliyuncs.com/herui-public/rabbitmq
+        container_name: rabbitmq
+        environment:
+            - RABBITMQ_QUEUE=default
+            - RABBITMQ_HOST=rabbitmq
+            - RABBITMQ_PORT=5672
+            - RABBITMQ_DEFAULT_VHOST=/
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=admin
+        ports:
+            - 5672:5672
+            - 15672:15672
